@@ -77,7 +77,7 @@ def create_point(param_canvas, x, y):
 
 # Loops through and creates points at price values
 for i in range(len(prices)):
-    y_coord_list.append((prices[i] / price_max) * y_axis_line_length)
+    y_coord_list.append(((1-(prices[i] / price_max)) * y_axis_line_length) + 50)
     create_point(canvas, x_coord_list[i], y_coord_list[i])
 
 for i in range(len(x_coord_list) - 1):
