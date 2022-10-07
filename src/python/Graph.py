@@ -1,93 +1,101 @@
 # Imports
 from tkinter import *
 
-# Graph properties
-x_title = "X-Axis"
-y_title = "Y-Axis"
 
-x_max = 100
-y_max = 100
+class Graph:
+    # Graph properties
+    x_title = "X-Axis"
+    y_title = "Y-Axis"
 
-# Window Properties
-width = 1000
-height = 800
-background_color = 'lightgray'
-font = 'arial 10 bold'
+    # Graph data
+    x_values = []
+    y_values = []
 
-# Create window
-window = Tk()
-window.title("Graph")
-window.configure(width=width, height=height)
-window.configure(bg='white')
+    # Properties
+    canvas = None
+    window = None
+    width = 1000
+    height = 800
+    background_color = 'lightgray'
+    font = 'arial 10 bold'
 
-canvas = Canvas(window, width=width, height=height, bg=background_color)
-# x-axis text
-canvas.create_text(width/2, height - 15, text=x_title, font=font)
+    # Creates a point on the given canvas at the given coordinates
+    @staticmethod
+    def create_point(param_canvas, x, y):
+        param_canvas.create_oval(x-2, y-2, x+2, y+2, fill='black')
 
-# Axis lines
-# y line
-canvas.create_line(100, 50, 100, height-100)
-# x line
-canvas.create_line(100, height-100, width-100, height-100)
+    def __init__(self, window, xvalues, yvalues):
+        self.window = window
+        self.canvas = Canvas(window, width=self.width, height=self.height, bg=self.background_color)
+        self.x_values = xvalues
+        self.y_values = yvalues
 
-y_axis_line_length = (height - 100) - 50
-x_axis_line_length = (width - 100) - 100
+        # x-axis text
+        self.canvas.create_text(self.width / 2, self.height - 15, text=self.x_title, font=self.font)
 
-# Determined from above (not automatically)
-# distance from left side of window to y-axis
-y_axis_offset = 100
-# distance from top of window to x-axis
-x_axis_offset = height-100
+        # Axis lines
+        # y line
+        self.canvas.create_line(100, 50, 100, self.height - 100)
+        # x line
+        self.canvas.create_line(100, self.height - 100, self.width - 100, self.height - 100)
 
-# Data set
-prices = [10, 20, 30, 20, 10, 5, 40, 10]
-dates = [1, 2, 3, 4, 5, 6, 7, 8]
+        y_axis_line_length = (self.height - 100) - 50
+        x_axis_line_length = (self.width - 100) - 100
 
-# Determining min, max, and range of data set
-price_min = min(prices)
-price_max = max(prices)
-price_range = price_max - price_min
+        # Determined from above (not automatically)
+        # distance from left side of window to y-axis
+        y_axis_offset = 100
+        # distance from top of window to x-axis
+        x_axis_offset = self.height - 100
 
-# Storing coordinates for line values
-x_coord_list = []
-y_coord_list = []
+        # Determining min, max, and range of data set
+        y_min = min(self.y_values)
+        y_max = max(self.y_values)
+        price_range = y_max - y_min
 
-# Creating list of evenly distributed values between min and max prices
-step = (price_max - price_min) / float(len(dates)-1)
-list_prices = [int(round(price_min+x*step)) for x in range(len(dates))]
+        # Storing coordinates for line values
+        x_coord_list = []
+        y_coord_list = []
 
-# Create lines and labels for x-axis
-for i in range(len(prices)):
-    lineXPos = ((i+1) * (x_axis_line_length / len(prices))) + y_axis_offset
-    x_coord_list.append(lineXPos)
-    canvas.create_line(lineXPos, x_axis_offset - 5, lineXPos, x_axis_offset + 5)
-    canvas.create_text(lineXPos, x_axis_offset + 12, text=str(dates[i]), font='arial 7')
+        # Creating list of evenly distributed values between min and max prices
+        step = (y_max - y_min) / float(len(self.y_values) - 1)
+        list_prices = [int(round(y_min + (i * step))) for i in range(len(self.x_values))]
 
-# Create lines and labels for y-axis
-for i in range(len(dates)):
-    lineYPos = (i * (y_axis_line_length / len(dates))) + 50
-    canvas.create_line(y_axis_offset - 5, lineYPos, y_axis_offset + 5, lineYPos)
-    canvas.create_text(y_axis_offset - 12, lineYPos, text=str(list_prices[(len(dates) - i) - 1]), font='arial 7')
+        # Create lines and labels for x-axis
+        for i in range(len(self.x_values)):
+            multiplier = i * len(self.x_values) / (len(self.x_values) - 1)
+            linexpos = (multiplier * (x_axis_line_length / len(self.y_values))) + y_axis_offset
+            x_coord_list.append(linexpos)
+            self.canvas.create_line(linexpos, x_axis_offset - 5, linexpos, x_axis_offset + 5)
+            self.canvas.create_text(linexpos, x_axis_offset + 12, text=str(self.x_values[i]), font='arial 7')
 
+        # Create lines and labels for y-axis
+        for i in range(len(self.y_values)):
+            multiplier = i * len(self.y_values)/(len(self.y_values)-1)
+            lineypos = (multiplier * (y_axis_line_length / len(self.x_values))) + 50
+            self.canvas.create_line(y_axis_offset - 5, lineypos, y_axis_offset + 5, lineypos)
+            self.canvas.create_text(y_axis_offset - 12, lineypos, text=str(list_prices[len(self.y_values)-(i+1)]),
+                                    font='arial 7')
 
-# Creates a point on the given canvas at the given coordinates
-def create_point(param_canvas, x, y):
-    param_canvas.create_oval(x-2, y-2, x+2, y+2, fill='black')
+        # Loops through and creates points at price values
+        for i in range(len(self.y_values)):
+            y_coord_list.append(((1 - (self.y_values[i] / y_max)) * y_axis_line_length) + 50)
+            self.create_point(self.canvas, x_coord_list[i], y_coord_list[i])
 
+        for i in range(len(x_coord_list) - 1):
+            self.canvas.create_line(x_coord_list[i], y_coord_list[i], x_coord_list[i + 1], y_coord_list[i + 1])
 
-# Loops through and creates points at price values
-for i in range(len(prices)):
-    y_coord_list.append(((1-(prices[i] / price_max)) * y_axis_line_length) + 50)
-    create_point(canvas, x_coord_list[i], y_coord_list[i])
+        self.canvas.pack()
 
-for i in range(len(x_coord_list) - 1):
-    canvas.create_line(x_coord_list[i], y_coord_list[i], x_coord_list[i+1], y_coord_list[i+1])
+    # Returns the window that the canvas is stored in
+    def get_window(self):
+        return self.window
 
+    # Returns the list of x_values
+    def get_x_values(self):
+        return self.x_values
 
-canvas.pack()
-
-window.mainloop()
-
-
-
+    # Returns the list of y_values
+    def get_y_values(self):
+        return self.y_values
 
