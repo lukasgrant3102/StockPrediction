@@ -13,10 +13,10 @@ class Graph:
     y_values = []
 
     # Properties
-    canvas = None
-    window = None
-    width = 1000
-    height = 800
+    # canvas = None
+    # window = None
+    # width = 600
+    # height = 400
     background_color = 'lightgray'
     font = 'arial 10 bold'
 
@@ -26,8 +26,11 @@ class Graph:
         param_canvas.create_oval(x-2, y-2, x+2, y+2, fill='black')
 
     def __init__(self, window, xvalues, yvalues):
-        self.window = window
+        self.width = 600
+        self.height = 400
+
         self.canvas = Canvas(window, width=self.width, height=self.height, bg=self.background_color)
+        print('canvas created with height = ' + str(self.height))
         self.x_values = xvalues
         self.y_values = yvalues
 
@@ -72,10 +75,10 @@ class Graph:
 
         # Create lines and labels for y-axis
         for i in range(len(self.y_values)):
-            multiplier = i * len(self.y_values)/(len(self.y_values)-1)
+            multiplier = i * len(self.y_values) / (len(self.y_values) - 1)
             lineypos = (multiplier * (y_axis_line_length / len(self.x_values))) + 50
             self.canvas.create_line(y_axis_offset - 5, lineypos, y_axis_offset + 5, lineypos)
-            self.canvas.create_text(y_axis_offset - 12, lineypos, text=str(list_prices[len(self.y_values)-(i+1)]),
+            self.canvas.create_text(y_axis_offset - 12, lineypos, text=str(list_prices[len(self.y_values) - (i + 1)]),
                                     font='arial 7')
 
         # Loops through and creates points at price values
@@ -88,10 +91,6 @@ class Graph:
 
         self.canvas.pack()
 
-    # Returns the window that the canvas is stored in
-    def get_window(self):
-        return self.window
-
     # Returns the list of x_values
     def get_x_values(self):
         return self.x_values
@@ -100,3 +99,10 @@ class Graph:
     def get_y_values(self):
         return self.y_values
 
+    def get_height(self):
+        return self.height
+
+    def myfunction(self):
+        self.height = 100
+        self.width = 100
+        self.canvas.config(width=100, height=100)
