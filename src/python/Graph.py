@@ -1,3 +1,4 @@
+# Graph class created by Lukas Grant
 # Imports
 from tkinter import *
 
