@@ -1,6 +1,7 @@
 # Graph class created by Lukas Grant
 # Imports
 from tkinter import *
+from qtpy import QtGui, QtCore
 
 
 class Graph:
@@ -103,6 +104,4 @@ class Graph:
         return self.height
 
     def myfunction(self):
-        self.height = 100
-        self.width = 100
-        self.canvas.config(width=100, height=100)
+        self.canvas.create_line(0, 100, 150, 200)
