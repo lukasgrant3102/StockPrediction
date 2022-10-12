@@ -42,7 +42,7 @@ class Graph(QWidget):
         painter = QPainter(self)
 
         # Create background
-        painter.fillRect(0, 0, 800, 600, Qt.white)
+        painter.fillRect(0, 0, 800, 600, Qt.red)
 
         painter.setPen(Qt.black)
 
@@ -99,8 +99,6 @@ class Graph(QWidget):
 
         for i in range(len(x_coord_list) - 1):
             painter.drawLine(x_coord_list[i], y_coord_list[i], x_coord_list[i + 1], y_coord_list[i + 1])
-
-
 
     # Returns the list of x_values
     def get_x_values(self):
