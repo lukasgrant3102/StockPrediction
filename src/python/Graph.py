@@ -44,6 +44,7 @@ class Graph(QWidget):
 
         # x-axis text
         painter.drawText(self.width / 2, self.height - 15, self.x_title)
+        painter.drawText((10, 10), 'test')
 
         # Axis lines
         # y line
@@ -95,7 +96,6 @@ class Graph(QWidget):
 
         for i in range(len(x_coord_list) - 1):
             painter.drawLine(x_coord_list[i], y_coord_list[i], x_coord_list[i + 1], y_coord_list[i + 1])
-
 
     # Returns the list of x_values
     def get_x_values(self):
