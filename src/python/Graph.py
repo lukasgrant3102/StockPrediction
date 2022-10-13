@@ -31,8 +31,8 @@ class Graph(QWidget):
     def create_point(x, y):
         tkinter.(x - 2, y - 2, 4, 4)
 
-    def __init__(self, xvalues, yvalues):
-        super().__init__()
+    def __init__(self, xvalues, yvalues, parent):
+        super().__init__(parent)
         self.width = 600
         self.height = 400
 
@@ -42,6 +42,10 @@ class Graph(QWidget):
     def paintEvent(self, event):
         # Create painter object
         painter = QPainter(self)
+
+        # Create background
+        painter.fillRect(0, 0, 800, 600, Qt.red)
+
         painter.setPen(Qt.black)
 
         # x-axis text
@@ -107,5 +111,19 @@ class Graph(QWidget):
     def get_y_values(self):
         return self.y_values
 
+    # Set the object's x value list
+    def set_x_values(self, xvalues):
+        self.x_values = xvalues
+
+    # Set the object's y value list
+    def set_y_values(self, yvalues):
+        self.y_values = yvalues
+
+    # Returns the width of the graph
+    def get_width(self):
+        return self.width
+
+    # Returns the height of the graph
     def get_height(self):
         return self.height
+
