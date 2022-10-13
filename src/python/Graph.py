@@ -6,6 +6,8 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
+from tkinter import *
+
 
 class Graph(QWidget):
     # Graph properties
@@ -26,8 +28,8 @@ class Graph(QWidget):
 
     # Creates a point on the given canvas at the given coordinates
     @staticmethod
-    def create_point(painter, x, y):
-        painter.drawEllipse(x - 2, y - 2, 4, 4)
+    def create_point(x, y):
+        tkinter.(x - 2, y - 2, 4, 4)
 
     def __init__(self, xvalues, yvalues):
         super().__init__()
