@@ -9,27 +9,36 @@ def split(list_a, chunk_size):
 
 increasing_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 decreasing_list = increasing_list[::-1]
-random_list = [1, 2, 3, 2, 5, 7, 5, 4, 2]
-print(list(split(increasing_list, 4)))
+random_list = [1, 2, 3, 2, 5, 7, 5, 4, 2, 6]
+# print(list(split(increasing_list, 4)))
 
-
-def increasing(list_a, start, length):
-    start_index = start
-    original_length = length
-
+###
+def increasing(list_a):
+    current_value = list_a[0]
     for i in range(len(list_a)):
-        if i > 0:
-            if list_a[i] < list_a[i-1]:
-                print('List increases from index: ' + str(start_index) + ", to index: " + str((start_index + i)-1))
-                increasing(list_a[i: len(list_a)], i+start_index, original_length)
-                break
+        if list_a[i] > current_value:
+            # Continue loop until not increasing
+            current_value = list_a[i]
+        elif list_a[i] <= current_value and i > 0 and len(list_a) - len(list_a[i:]) > 1:
+            print('stop and warn')
+            print('increased from index 0 value ' + str(list_a[0]) + ' to index ' + str(i-1) + ' value ' + str(list_a[i-1]))
+            # create list after stop point to end
+            print(list_a[i:])
+            increasing(list_a[i:])
+            break
 
-            if i == len(list_a) - 1:
-                print('List increases from index: ' + str(start_index) + ", to index: " + str(original_length-1))
+
+def increasing_2(list_a):
+    current_value = list_a[0]
+    for i in range(len(list_a)):
+        if i > 0 and list_a[i] < current_value:
+            print(list_a[i:])
+            increasing_2(list_a[i:])
 
 
-# increasing(increasing_list, 0, len(increasing_list))
-increasing(decreasing_list, 0, len(decreasing_list))
+
+increasing_2(random_list)
+# increasing(decreasing_list, 0, len(decreasing_list))
 # increasing(random_list, 0, len(random_list))
 
 
