@@ -13,6 +13,7 @@ random_list = [1, 2, 3, 2, 5, 7, 5, 4, 2, 6]
 # print(list(split(increasing_list, 4)))
 
 
+# Groups list into smaller increasing and decreasing groups
 def grouping(list_a):
     # Initial variables
     main = []
@@ -34,9 +35,23 @@ def grouping(list_a):
             is_increasing = not is_increasing
 
     print(main)
+    return main
 
 
-grouping(random_list)
+# Determines the intervals which the values are increasing and decreasing
+def intervals(list_a):
+    main = grouping(list_a)
+    interval_list = []
+    for group in main:
+        if not len(group) < 2:
+            if group[0] < group[1]:
+                interval_list.append("I")
+            else:
+                interval_list.append("D")
+    print(interval_list)
+
+
+intervals(random_list)
 
 # increasing(decreasing_list, 0, len(decreasing_list))
 # increasing(random_list, 0, len(random_list))
