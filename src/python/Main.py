@@ -1,10 +1,8 @@
-import random
+from yfinance import *
 
 
-# Splits a list into sub-lists of the specified chunk size
-def split(list_a, chunk_size):
-    for i in range(0, len(list_a), chunk_size):
-        yield list_a[i: i + chunk_size]
+GoogleInfo = Ticker('GOOG')
+print(GoogleInfo)
 
 
 increasing_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
