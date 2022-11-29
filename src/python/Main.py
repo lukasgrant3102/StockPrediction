@@ -2,13 +2,16 @@ from yfinance import *
 
 
 GoogleInfo = Ticker('GOOG')
-print(GoogleInfo)
+history = GoogleInfo.history(period='1y')
+closeValues = history['Close']
 
 
-increasing_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-decreasing_list = increasing_list[::-1]
-random_list = [1, 2, 3, 2, 5, 7, 5, 4, 2, 6]
-# print(list(split(increasing_list, 4)))
+# Gets the closing value each day for specified stock
+def get_close_values(ticker):
+    StockInfo = Ticker(ticker)
+    StockHistory = StockInfo.history(period='5y', interval='5d')
+    StockCloseValues = StockHistory['Close']
+    return StockCloseValues
 
 
 # Groups list into smaller increasing and decreasing groups
@@ -49,7 +52,7 @@ def intervals(list_a):
     print(interval_list)
 
 
-intervals(random_list)
+intervals(get_close_values('GOOG'))
 
 # increasing(decreasing_list, 0, len(decreasing_list))
 # increasing(random_list, 0, len(random_list))
