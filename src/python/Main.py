@@ -63,7 +63,6 @@ def pattern_finder(stock_object, pattern_object):
 
     # Stores index intervals that the specified pattern is present
     pattern_indexes = []
-    date_spans = []
     full_data_list = []
 
     # Stores the current values of interval and percents as iteration occurs
@@ -90,6 +89,11 @@ def pattern_finder(stock_object, pattern_object):
         del current_percents[0]
         current_compare.append(intervals_list[i + len(pattern_object.pattern)])
         current_percents.append(percent_list[i + len(pattern_object.percents)])
+
+    # Write collected data to a file
+    data_file = open("stock_data.txt", "a")
+    for data in full_data_list:
+        data_file.write(data + "\n")
 
 
 # Creates ticker list (S&P 500 tickers)
