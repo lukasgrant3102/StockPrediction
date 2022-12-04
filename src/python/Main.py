@@ -106,11 +106,13 @@ with open("SP500.txt") as f:
 
 # Patterns
 triple_top = Pattern("TripleTop", ['I', 'D', 'I', 'D', 'I', 'D'], [5, -5, 5, -5, 5, -5])
+upside_breakout = Pattern("DownsideBreakout", ['D', 'I', 'D', 'I'], [-15, 15, -15, 20])
+# Double bottom for presentation
 
 # Iterate through all tickers in list
 for ticker in ticker_list:
     stock = StockImporter(ticker)
-    pattern_finder(stock, triple_top)
+    pattern_finder(stock, upside_breakout)
 
 # for i in range(20):
 # stock = StockImporter(ticker_list[i])
